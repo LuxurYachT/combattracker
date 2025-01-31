@@ -9,8 +9,8 @@ button_frame = tk.Frame(root)
 button_frame.pack()
 
 def add_combatant():
-    new_combatabt = Combatant(root)
-    fields.append(new_combatabt)
+    new_combatant = Combatant(root)
+    fields.append(new_combatant)
 
 def sort_combatants():
     combatants = []
@@ -22,6 +22,11 @@ def sort_combatants():
             data_set[1] = int(data_set[1])
         combatants.append(data_set)
     combatants = sorted(combatants, key=lambda x: (x[1] is None, -x[1] if x[1] is not None else 0))
+    for j in range(len(fields)):
+        fields[j].combatant_name_entry.delete(0, tk.END)
+        fields[j].combatant_name_entry.insert(0, combatants[j][0])
+        fields[j].combatant_init_entry.delete(0, tk.END)
+        fields[j].combatant_init_entry.insert(0, str(combatants[j][1]))
 
 
 
