@@ -12,8 +12,11 @@ class Combatant:
         self.combatant_init_entry.configure(validate="key", validatecommand=(self.combatant_init_entry.register(self.validate_input), '%P'))
 
     def validate_input(self, new_value):
-        if new_value == "" or new_value.isdigit():
+        try:
+            if new_value == "":
+                return True
+            float(new_value)
             return True
-        else:
+        except ValueError:
             return False
-        
+            
