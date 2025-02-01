@@ -9,7 +9,7 @@ button_frame = tk.Frame(root)
 button_frame.pack()
 
 def add_combatant():
-    new_combatant = Combatant(root)
+    new_combatant = Combatant(root, remove_row)
     rows.append(new_combatant)
 
 def get_combatant_data():
@@ -54,6 +54,12 @@ def reverse_turn():
         else:
             rows[i].combatant_name_entry.insert(0, combatants[len(rows)-1][0])
             rows[i].combatant_init_entry.insert(0, str(combatants[len(rows)-1][1])) 
+
+def remove_row(row):
+    if row in rows:
+        rows.remove(row)
+    else:
+        print("row not found")
 
 
 add_combatant_button = tk.Button(button_frame, text="Add Combatant", command=add_combatant)
