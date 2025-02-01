@@ -43,12 +43,27 @@ def advance_turn():
             rows[i].combatant_name_entry.insert(0, combatants[0][0])
             rows[i].combatant_init_entry.insert(0, str(combatants[0][1]))            
 
+def reverse_turn():
+    combatants = get_combatant_data()
+    for i in range(len(rows)):
+        rows[i].combatant_name_entry.delete(0, tk.END)
+        rows[i].combatant_init_entry.delete(0, tk.END)
+        if i > 0:
+            rows[i].combatant_name_entry.insert(0, combatants[i-1][0])
+            rows[i].combatant_init_entry.insert(0, str(combatants[i-1][1]))
+        else:
+            rows[i].combatant_name_entry.insert(0, combatants[len(rows)-1][0])
+            rows[i].combatant_init_entry.insert(0, str(combatants[len(rows)-1][1])) 
+
 
 add_combatant_button = tk.Button(button_frame, text="Add Combatant", command=add_combatant)
 add_combatant_button.pack(side="left")
 
 sort_button = tk.Button(button_frame, text="sort", command=sort_combatants)
 sort_button.pack(side="left")
+
+reverse_button = tk.Button(button_frame, text="<", command=reverse_turn)
+reverse_button.pack(side="left")
 
 advance_button = tk.Button(button_frame, text=">", command=advance_turn)
 advance_button.pack(side="left")
