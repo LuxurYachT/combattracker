@@ -9,7 +9,7 @@ class MyMenu(tk.Menu):
         file_menu.add_command(label="Open", command=load_session)
         file_menu.add_command(label="Save", command=save_session)
         file_menu.add_separator()
-        file_menu.add_command(label="Exit", command=None)
+        file_menu.add_command(label="Exit", command=root.quit)
         self.add_cascade(label="File", menu=file_menu)
 
         view_menu = tk.Menu(self, tearoff=0)
