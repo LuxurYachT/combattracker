@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import filedialog
+from tkinter import filedialog, messagebox
 from combatant_widget import Combatant
 from menubar import MyMenu
 import json
@@ -66,6 +66,7 @@ def remove_row(row):
     else:
         print("row not found")
 
+
 def save_session():
     if len(rows) > 0:
         filepath = filedialog.asksaveasfilename(
@@ -80,12 +81,23 @@ def save_session():
 def load_session():
     filepath = filedialog.askopenfilename(defaultextension="json")
     if os.path.exists(filepath):
+        backup = get_combatant_data()
         for row in reversed(rows[:]):
             row.destroy_row()
-        with open(filepath, "r") as file:
-            data = json.load(file)
-            for i in range(len(data)):
-                add_combatant(data[i][0], data[i][1])
+        try:
+            with open(filepath, "r") as file:
+                data = json.load(file)
+                for i in range(len(data)):
+                    if not isinstance(data[i][0], str):
+                        raise Exception("Invalid name")
+                    if not isinstance(data[i][0], float):
+                        raise Exception("Invalid init")
+                    add_combatant(data[i][0], data[i][1])
+        except Exception as e:
+            messagebox.showerror("Load error", "Invalid save file.")
+
+
+
 
 menubar = MyMenu(root, save_session, load_session)
 

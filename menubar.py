@@ -13,7 +13,6 @@ class MyMenu(tk.Menu):
         self.add_cascade(label="File", menu=file_menu)
 
         view_menu = tk.Menu(self, tearoff=0)
-        view_menu.add_checkbutton(label="small", command=None)
         view_menu.add_checkbutton(label="large", command=None)
         self.add_cascade(label="View", menu=view_menu)
 
