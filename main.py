@@ -66,6 +66,10 @@ def remove_row(row):
     else:
         print("row not found")
 
+def new_session():
+    if rows:
+        for row in reversed(rows[:]):
+            row.destroy_row()
 
 def save_session():
     if len(rows) > 0:
@@ -81,22 +85,22 @@ def save_session():
 def load_session():
     filepath = filedialog.askopenfilename(defaultextension="json")
     if os.path.exists(filepath):
-        backup = get_combatant_data()
-        for row in reversed(rows[:]):
-            row.destroy_row()
         try:
             with open(filepath, "r") as file:
                 data = json.load(file)
                 for i in range(len(data)):
                     if not isinstance(data[i][0], str):
                         raise Exception("Invalid name")
-                    if not isinstance(data[i][0], float):
+                    if not isinstance(data[i][1], float):
                         raise Exception("Invalid init")
-                    add_combatant(data[i][0], data[i][1])
+                new_session()
+                recreate_session(data)
         except Exception as e:
             messagebox.showerror("Load error", "Invalid save file.")
 
-
+def recreate_session(data):
+    for i in range(len(data)):
+        add_combatant(data[i][0], data[i][1])
 
 
 menubar = MyMenu(root, save_session, load_session)
@@ -114,5 +118,5 @@ advance_button = tk.Button(button_frame, text=">", command=advance_turn)
 advance_button.pack(side="left")
 
 root.config(menu = menubar) 
-root.title("Oroboros Combat Tracker")
+root.title("Lux Combat Tracker")
 root.mainloop()
